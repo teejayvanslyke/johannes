@@ -70,7 +70,7 @@ module Johannes
     end
 
     def to_image
-      image = MiniMagick::Image.read(IMGKit.new(to_html).to_img)
+      image = MiniMagick::Image.read(IMGKit.new(to_html, width: @width).to_img)
       image.trim
       image.to_blob
     end

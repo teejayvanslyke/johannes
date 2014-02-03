@@ -6,4 +6,4 @@ require 'johannes/application'
 module Johannes
 end
 
-Johannes::Application.secret = 'omgwtfbbq'
+Johannes::Application.secret = ENV['JOHANNES_SECRET']

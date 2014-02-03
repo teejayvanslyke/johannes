@@ -13,6 +13,17 @@ module Johannes
       @line_height = attributes['line_height'] || '1.0em'
     end
 
+    @stylesheets = []
+
+    def self.stylesheets
+      @stylesheets
+    end
+
+    def self.stylesheets=(val)
+      @stylesheets = val
+    end
+
+
     attr_reader :text, :width, :font
 
     def css_attributes
@@ -34,10 +45,18 @@ module Johannes
       rval
     end
 
+    def stylesheet_link_tags
+      Johannes::Base.stylesheets.map do |url|
+        %{<link rel="stylesheet" type="text/css" href="#{url}"/>}
+      end.join('')
+    end
+
     def to_html
       %{
         <html>
-          <head></head>
+          <head>
+            #{stylesheet_link_tags}
+          </head>
           <body>
             <div style="#{css}">#{text}</div>
 

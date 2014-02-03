@@ -1,8 +1,15 @@
 # Johannes
 
-TODO: Write a gem description
+Simple text-to-image generation daemon in Ruby, powered by Sinatra.
 
 ## Installation
+
+Make sure you have wkhtmltoimage installed. You'll want to configure IMGKit to point 
+at it:
+
+    IMGKit.configure do |config|
+      config.wkhtmltoimage = '/path/to/wkhtmltoimage'
+    end
 
 Add this line to your application's Gemfile:
 
@@ -18,12 +25,5 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request

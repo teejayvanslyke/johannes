@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "imgkit"
   spec.add_dependency "mini_magick"
   spec.add_dependency "sinatra"
+  spec.add_dependency "enigma"
+  spec.add_dependency 'json'
 end

@@ -4,6 +4,6 @@ require 'johannes/base'
 require 'johannes/application'
 
 module Johannes
-  # Your code goes here...
 end
 
+Johannes::Application.secret = 'omgwtfbbq'

@@ -1,5 +1,6 @@
 require 'imgkit'
 require 'mini_magick'
+require 'enigma'
 
 module Johannes
 

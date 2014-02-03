@@ -6,6 +6,14 @@ module Johannes
 
   class Application < Sinatra::Base
 
+    def self.base_uri=(base_uri)
+      @base_uri = base_uri
+    end
+
+    def self.base_uri
+      @base_uri
+    end
+
     def self.secret=(secret)
       @secret = secret
     end

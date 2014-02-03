@@ -10,6 +10,7 @@ module Johannes
       @width = attributes['width'] || nil
       @size  = attributes['size'] || '12px'
       @font  = attributes['font'] || 'Helvetica Neue'
+      @color = attributes['color'] || 'black'
       @line_height = attributes['line_height'] || '1.0em'
     end
 
@@ -31,6 +32,7 @@ module Johannes
         'display'     => 'inline',
         'font-family' => @font,
         'font-size'   => @size,
+        'color'       => @color,
         'line-height' => @line_height,
         'width'       => @width || 'auto'
       }

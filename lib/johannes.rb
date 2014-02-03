@@ -3,8 +3,12 @@ require 'johannes/base'
 require 'johannes/application'
 
 module Johannes
+  def self.url_for(params)
+    URI.join(Johannes::Application.base_uri, Johannes::Application.path(params)).to_s
+  end
 end
 
+Johannes::Application.base_uri = ENV['JOHANNES_BASE_URI']
 Johannes::Application.secret = ENV['JOHANNES_SECRET'] || 'omgwtfbbq'
 Johannes::Base.stylesheets = JSON.parse(ENV['JOHANNES_STYLESHEETS'] || '[]')
 

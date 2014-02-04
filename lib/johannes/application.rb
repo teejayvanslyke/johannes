@@ -29,21 +29,27 @@ module Johannes
       !! @secret
     end
 
+    def self.generate_url_params(params)
+      params['signature'] = signature(JSON.generate(params.to_a.sort))
+      return params.map{|k,v| "#{k}=#{CGI.escape(v)}"}.join("&")
+    end
+
     def self.path(params)
-      params['signature'] = signature(:get, '/', JSON.generate(params.to_a.sort))
-      return '/?' + params.map{|k,v| "#{k}=#{CGI.escape(v)}"}.join("&")
+      '/?' + generate_url_params(params)
     end
 
-    def self.signature(method, path, payload)
-      message = [method, path, payload].map(&:to_s).inject(&:+)
+    def self.dimensions_path(params)
+      '/dimensions?' + generate_url_params(params)
+    end
 
+    def self.signature(payload)
       digest = OpenSSL::Digest::Digest.new("sha512")
-      OpenSSL::HMAC.hexdigest(digest, self.secret, message).to_s
+      OpenSSL::HMAC.hexdigest(digest, self.secret, payload).to_s
     end
 
-    def self.signature_matches?(actual_signature, method, path, payload)
+    def self.signature_matches?(actual_signature, payload)
       matched = true
-      expected_signature = self.signature(method, path, payload)
+      expected_signature = self.signature(payload)
       expected_signature.each_char.zip(actual_signature.to_s.each_char).each do |expected, actual|
         matched = false if expected != actual
       end
@@ -63,23 +69,32 @@ module Johannes
       end
     end
 
-    get '/' do
-
+    def authenticate(request, &block)
       if Johannes::Application.require_signed_request?
-        signature = params['signature']
-        method    = request.request_method.downcase
-        path      = request.path
-        base_params = params
+        signature = request.params['signature']
+        base_params = request.params
         base_params.delete('signature')
         payload   = JSON.generate(base_params.to_a.sort)
 
-        if Johannes::Application.signature_matches?(signature, method, path, payload)
-          content_type 'image/png'
-          create_image(signature, params)
+        if Johannes::Application.signature_matches?(signature, payload)
+          block.call signature, base_params
         else
           status 403
         end
       else
+        instance_eval &block
+      end
+    end
+
+    get '/dimensions' do
+      authenticate request do |signature, params|
+        image = MiniMagick::Image.read(create_image(signature, params))
+        JSON.generate({ width: image[:width], height: image[:height] })
+      end
+    end
+
+    get '/' do
+      authenticate request do |signature, params|
         content_type 'image/png'
         create_image(signature, params)
       end

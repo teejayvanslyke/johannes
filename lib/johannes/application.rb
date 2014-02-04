@@ -88,6 +88,7 @@ module Johannes
 
     get '/dimensions' do
       authenticate request do |signature, params|
+        content_type 'application/json'
         image = MiniMagick::Image.read(create_image(signature, params))
         JSON.generate({ width: image[:width], height: image[:height] })
       end

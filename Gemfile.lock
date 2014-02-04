@@ -8,6 +8,7 @@ PATH
       mini_magick
       rufus-lru
       sinatra
+      thin
 
 GEM
   remote: https://rubygems.org/
@@ -59,4 +60,3 @@ DEPENDENCIES
   johannes!
   rake
   shotgun
-  thin

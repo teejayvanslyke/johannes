@@ -30,7 +30,7 @@ module Johannes
 
     def self.path(params)
       params['signature'] = signature(:get, '/', JSON.generate(params.to_a.sort))
-      return '/?' + URI.encode(params.map{|k,v| "#{k}=#{v}"}.join("&"))
+      return '/?' + params.map{|k,v| URI.encode("#{k}=#{v}")}.join("&")
     end
 
     def self.signature(method, path, payload)

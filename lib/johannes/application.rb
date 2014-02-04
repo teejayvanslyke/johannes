@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'openssl'
 require 'json'
+require 'cgi'
 
 module Johannes
 
@@ -30,7 +31,7 @@ module Johannes
 
     def self.path(params)
       params['signature'] = signature(:get, '/', JSON.generate(params.to_a.sort))
-      return '/?' + params.map{|k,v| URI.encode("#{k}=#{v}")}.join("&")
+      return '/?' + params.map{|k,v| "#{k}=#{CGI.escape(v)}"}.join("&")
     end
 
     def self.signature(method, path, payload)

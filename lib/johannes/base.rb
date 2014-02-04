@@ -32,7 +32,6 @@ module Johannes
       {
         'display'     => 'inline',
         'font-family' => @font,
-        'text-align'  => @align,
         'font-size'   => @size,
         'color'       => @color,
         'line-height' => @line_height,
@@ -61,11 +60,9 @@ module Johannes
           <head>
             #{stylesheet_link_tags}
           </head>
-          <body>
+          <!-- Not sure why, but alignment needs to go into the body tag for center align to work. -->
+          <body style="text-align: #{@align}">
             <div style="#{css}">#{text}</div>
-
-            <script type="text/javascript">
-            </script>
           </body>
         </html>
       }

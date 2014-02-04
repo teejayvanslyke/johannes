@@ -6,12 +6,14 @@ PATH
       imgkit
       json
       mini_magick
+      rufus-lru
       sinatra
 
 GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.5)
+    daemons (1.1.9)
     enigma (0.0.5)
       addressable
       httparty
@@ -19,6 +21,7 @@ GEM
       rack
       rack
       rest_client
+    eventmachine (1.0.3)
     httparty (0.12.0)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -34,6 +37,7 @@ GEM
     rake (10.1.1)
     rest_client (1.7.2)
       netrc (~> 0.7.7)
+    rufus-lru (1.0.5)
     shotgun (0.9)
       rack (>= 1.0)
     sinatra (1.4.4)
@@ -41,6 +45,10 @@ GEM
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
     subexec (0.2.3)
+    thin (1.5.0)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     tilt (1.4.1)
 
 PLATFORMS
@@ -51,3 +59,4 @@ DEPENDENCIES
   johannes!
   rake
   shotgun
+  thin

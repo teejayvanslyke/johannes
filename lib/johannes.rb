@@ -1,5 +1,6 @@
 require "johannes/version"
 require 'johannes/base'
+require 'johannes/cache'
 require 'johannes/application'
 
 module Johannes

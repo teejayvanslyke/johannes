@@ -6,6 +6,8 @@ module Johannes
 
   class Application < Sinatra::Base
 
+    set :cache_size, 512
+
     def self.base_uri=(base_uri)
       @base_uri = base_uri
     end
@@ -52,6 +54,14 @@ module Johannes
       enable :logging
     end
 
+    def create_image(signature, params)
+      if image = Johannes::Cache.instance.get(signature)
+        image
+      else
+        Johannes::Cache.instance.set signature, Johannes::Base.new(params).to_image
+      end
+    end
+
     get '/' do
 
       if Johannes::Application.require_signed_request?
@@ -64,13 +74,13 @@ module Johannes
 
         if Johannes::Application.signature_matches?(signature, method, path, payload)
           content_type 'image/png'
-          Johannes::Base.new(params).to_image
+          create_image(signature, params)
         else
           status 403
         end
       else
         content_type 'image/png'
-        Johannes::Base.new(params).to_image
+        create_image(signature, params)
       end
     end
 

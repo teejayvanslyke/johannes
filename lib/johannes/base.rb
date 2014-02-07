@@ -71,6 +71,8 @@ module Johannes
     def to_image
       image = MiniMagick::Image.read(IMGKit.new(to_html, width: @width).to_img)
       image.trim
+      image.format "png"
+      image.depth '8'
       image.to_blob
     end
   end

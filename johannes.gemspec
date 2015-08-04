@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Johannes::VERSION
   spec.authors       = ["T.J. VanSlyke"]
   spec.email         = ["teejay.vanslyke@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Text to image generator for emails}
+  spec.summary       = %q{A server for generating images from text for emails}
   spec.homepage      = ""
   spec.license       = "MIT"
 
